@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginscreenModule } from './feature/auth/loginscreen/loginscreen.module';
-
+import { FeatureLayoutModule } from './layout/feature-layout/feature-layout.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
   BrowserModule,
@@ -18,6 +20,8 @@ import { LoginscreenModule } from './feature/auth/loginscreen/loginscreen.module
     ReactiveFormsModule,
     LoginscreenModule,
     AppRoutingModule,
+    FeatureLayoutModule,
+    RouterModule
 
     
   ],

@@ -1,0 +1,85 @@
+.container {
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #3f51b5;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toolbar-title {
+  flex: 1;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #0a0a0a;
+  color: white;
+  text-align: center;
+}
+
+.mini-sidenav {
+  background: linear-gradient(to bottom,#fafafa);
+  color: white;
+  transition: width 0.3s ease, background-color 0.3s;
+  overflow: hidden;
+  width: 60px;
+}
+
+.mini-sidenav.expanded {
+  width: 240px;
+}
+
+.icon-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.icon-list button {
+  color:rgba(0,0,0,.54);
+  justify-content: flex-start;
+  padding-left: 10px;
+  gap: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.icon-list button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+.icon-list button.active {
+  background-color: lightgrey;
+  color: #3f51b5
+
+}
+
+.icon-list span {
+  margin-left: 16px;
+  font-weight: 500;
+}
+
+.right-sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 16px;
+}
+
+.content {
+  padding: 20px;
+}
+
+.wide-menu .mat-menu-content {
+  min-width: 200px !important;
+  padding: 10px;
+  
+}

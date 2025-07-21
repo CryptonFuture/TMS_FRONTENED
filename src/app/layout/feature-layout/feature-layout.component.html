@@ -1,0 +1,52 @@
+<mat-toolbar color="primary" class="header">
+  <button mat-icon-button (click)="isExpanded = !isExpanded">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="toolbar-title">TMS</span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" class="wide-menu">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-drawer-container class="container">
+  <!-- Mini/Full Sidebar -->
+  <mat-drawer mode="side" position="start" [opened]="true" class="mini-sidenav" [ngClass]="{'expanded': isExpanded}">
+    <div class="icon-list">
+      <button mat-button (click)="openRight('Dashboard')" [class.active]="selected === 'Dashboard'" >
+        <mat-icon>dashboard</mat-icon>
+        <span *ngIf="isExpanded">Dashboard</span>
+      </button>
+      <button mat-button (click)="openRight('Employees')" [class.active]="selected === 'Employees'">
+        <mat-icon>people</mat-icon>
+        <span *ngIf="isExpanded">Employees</span>
+      </button>
+    </div>
+    
+  </mat-drawer>
+
+  <!-- Main Content -->
+  <mat-drawer-content>
+    <div class="content">
+      <p>Welcome to the dashboard!</p>
+      <p>Lorem ipsum dolor sit amet...</p>
+    </div>
+    <mat-toolbar color="accent" class="footer">
+      <span>© 2025 Your Company</span>
+    </mat-toolbar>
+  </mat-drawer-content>
+</mat-drawer-container>
