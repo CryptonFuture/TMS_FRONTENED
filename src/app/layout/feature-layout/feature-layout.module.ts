@@ -12,6 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FeatureFooterComponent } from '../feature-footer/feature-footer.component';
+import { FeatureHeaderComponent } from '../feature-header/feature-header.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { FeatureSidebarComponent } from '../feature-sidebar/feature-sidebar.component';
 
 
 @NgModule({
@@ -26,12 +30,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatListModule,
         MatMenuModule,
         MatTooltipModule,
+        AppRoutingModule
         
 
 
     ],
     declarations: [
         FeatureLayoutComponent,
+        FeatureFooterComponent,
+        FeatureHeaderComponent,
+        FeatureSidebarComponent
+        
     ],
     exports: [
         FeatureLayoutComponent,

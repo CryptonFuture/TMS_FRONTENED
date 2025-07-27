@@ -1,0 +1,36 @@
+<mat-drawer-container class="main-container">
+  <!-- Sidebar -->
+  <mat-drawer #drawer mode="side" [opened]="true" class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+    <div class="sidebar-content">
+      <button mat-button (click)="goToPage('dashboard')" [class.active]="selected === 'dashboard'">
+        <mat-icon>dashboard</mat-icon>
+        <span *ngIf="isExpanded">Dashboard</span>
+      </button>
+      <button mat-button (click)="goToPage('employees')" [class.active]="selected === 'employees'">
+        <mat-icon>people</mat-icon>
+        <span *ngIf="isExpanded">Employees</span>
+      </button>
+    </div>
+  </mat-drawer>
+
+  <!-- Main Content -->
+  <mat-drawer-content [ngClass]="{ 'shifted': isExpanded }">
+    <!-- Header -->
+    <header class="header">
+      <button mat-icon-button (click)="toggleSidebar()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>My Dashboard</span>
+    </header>
+
+    <!-- Main Area -->
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Footer content here</p>
+    </footer>
+  </mat-drawer-content>
+</mat-drawer-container>

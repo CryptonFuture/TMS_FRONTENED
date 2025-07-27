@@ -1,0 +1,18 @@
+<mat-toolbar color="primary" class="header">
+  <button mat-icon-button (click)="toggle.emit()">
+  <mat-icon>menu</mat-icon>
+</button>
+
+  <span class="toolbar-title">TMS</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" class="wide-menu">
+    <button mat-menu-item><mat-icon>person</mat-icon> <span>Profile</span></button>
+    <button mat-menu-item><mat-icon>settings</mat-icon> <span>Settings</span></button>
+    <button mat-menu-item><mat-icon>logout</mat-icon> <span>Logout</span></button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,21 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-    // moduleId: module.id,
-    selector: 'feature-layout',
-    templateUrl: 'feature-layout.component.html',
-    styleUrls: ['feature-layout.component.scss']
+  selector: 'app-feature-layout',
+  templateUrl: './feature-layout.component.html',
+  styleUrls: ['./feature-layout.component.scss']
 })
 export class FeatureLayoutComponent {
-
-     @ViewChild('rightDrawer') rightDrawer!: MatDrawer;
-  selected = '';
   isExpanded = false;
+  selected = '';
 
-  openRight(item: string) {
-    this.selected = item;
-    this.rightDrawer.open();
+  constructor(private router: Router) {}
+
+  toggleSidebar() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  goToPage(route: string) {
+    this.selected = route;
+    this.router.navigate(['dashboard']);
   }
 }
-
