@@ -1,0 +1,36 @@
+// component css goes here
+.stylish-card {
+  max-width: 400px;
+  margin: 20px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fafafa;
+  transition: transform 0.2s ease-in-out;
+}
+
+.stylish-card:hover {
+  transform: scale(1.02);
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ff6f00;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #757575;
+}
+
+.card-description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.card-avatar {
+  background-image: url('https://images.unsplash.com/photo-1546182990-dffeafbe841d');
+  background-size: cover;
+  background-position: center;
+}      
