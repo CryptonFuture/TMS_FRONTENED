@@ -45,3 +45,12 @@ feature-footer {
   display: block;
   width: 100%;
 }
+button.active {
+  background-color: rgb(64, 61, 61); /* Orange */
+  color: white;
+}
+
+button.active mat-icon {
+  color: white;
+}
+

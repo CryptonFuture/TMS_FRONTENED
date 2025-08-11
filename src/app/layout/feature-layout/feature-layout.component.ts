@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-feature-layout',
   templateUrl: './feature-layout.component.html',
@@ -18,6 +19,6 @@ export class FeatureLayoutComponent {
 
   goToPage(route: string) {
     this.selected = route;
-    this.router.navigate(['dashboard']);
+    this.router.navigateByUrl(`/${route}`);
   }
 }

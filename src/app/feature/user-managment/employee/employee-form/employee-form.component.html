@@ -1,0 +1,75 @@
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin-bottom: 60px;">
+  <mat-card style="width: 100%; max-width: 500px; padding: 20px;">
+    
+    <!-- Title and Button in one row -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <mat-card-title>Employee Form</mat-card-title>
+      <button mat-raised-button color="accent" type="button" (click)="goToActiveEmployeeList()">
+        View Active Employees
+      </button>
+    </div>
+
+    <mat-card-content>
+<form #employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)" style="width: 100%;">
+
+        <!-- Name -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Name</mat-label>
+          <input matInput name="name" ngModel required />
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" ngModel required />
+        </mat-form-field>
+
+        <!-- Address -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Address</mat-label>
+          <input matInput name="address" ngModel />
+        </mat-form-field>
+
+        <!-- Contact No -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Contact No</mat-label>
+          <input matInput name="contactNo" type="tel" ngModel />
+        </mat-form-field>
+
+        <!-- Department -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Department</mat-label>
+          <input matInput name="department" ngModel />
+        </mat-form-field>
+
+        <!-- Status Select -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Status</mat-label>
+          <mat-select name="status" ngModel required>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="unactive">Unactive</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Join Date -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Join Date</mat-label>
+          <input matInput name="joinDate" type="date" ngModel />
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+          <mat-label>Description</mat-label>
+          <textarea matInput name="description" ngModel></textarea>
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 16px;">
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
