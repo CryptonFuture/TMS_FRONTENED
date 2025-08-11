@@ -8,12 +8,12 @@
     disableClose>
 
     <div class="icon-list">
-      <button mat-button (click)="goToPage('feature/dashboard')" [class.active]="selected === 'feature/dashboard'">
+      <button mat-button (click)="goToPage('app/dashboard')" [class.active]="selected === 'app/dashboard'">
         <mat-icon>dashboard</mat-icon>
         <span *ngIf="isExpanded">Dashboard</span>
       </button>
 
-      <button mat-button (click)="goToPage('feature/employees')" [class.active]="selected === 'feature/employees'">
+      <button mat-button (click)="goToPage('app/user-managment/employee/employeeForm')" [class.active]="selected === 'app/user-managment/employee/employeeForm'">
         <mat-icon>people</mat-icon>
         <span *ngIf="isExpanded">Employees</span>
       </button>

@@ -7,13 +7,19 @@ import { DashboardComponent } from './feature/dashboard/dashboard.component';
 const routes: Routes = [
 
     {
-    path:'',
+    path:'app',
     component:FeatureLayoutComponent,
     children:[
       {
         path:'dashboard',
         component:DashboardComponent
       },
+      {
+        path:'user-managment',
+        loadChildren:()=> import('./feature/user-managment/user-managment.module').then(m => m.UserManagmentModule)
+
+      },
+
       
 
     ]
