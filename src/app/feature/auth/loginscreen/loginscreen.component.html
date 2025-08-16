@@ -2,22 +2,43 @@
   <mat-card>
     <h2 class="title"><span>TMS</span> Login</h2>
 
-    <form>
+    <form [formGroup]="signInForm">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" placeholder="Enter your email" required>
+        <input formControlName="email" matInput type="email" placeholder="Enter your email" required>
+       <mat-error *ngIf="signInForm.get('email')?.hasError('required')">
+          Email is required
+      </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" placeholder="Enter your password" required>
+        <input formControlName="password" matInput type="password" placeholder="Enter your password" required>
+       <mat-error *ngIf="signInForm.get('password')?.hasError('required')">
+          Password is required
+      </mat-error>
       </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let roles of role" [value]="roles.role">{{roles.name}}</mat-option>
+          <mat-option *ngIf="role.length === 0" disabled>
+            No record found
+          </mat-option>
+        </mat-select>
+         <mat-error *ngIf="signInForm.get('role')?.hasError('required')">
+          Role is required
+      </mat-error>
+      </mat-form-field> <br />
 
       <mat-checkbox>Agree to Continue</mat-checkbox>
 
       <div class="actions">
         <a href="#">Forgot password?</a>
-        <button mat-flat-button color="primary" type="submit">Login</button>
+        <button [disabled]="signInForm.disabled" (click)="submit()" mat-flat-button color="primary" type="submit">
+          Login
+        </button>
       </div>
     </form>
   </mat-card>

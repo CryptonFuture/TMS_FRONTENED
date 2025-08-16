@@ -1,45 +1,38 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { EmployeeService } from 'src/app/core/employee/employee.service';
 import { RoleService } from 'src/app/core/role/role.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-employee-form',
-  templateUrl: './employee-form.component.html',
-  styles: [
-    `
-    .form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px; /* space between fields */
-}
-    `
-  ]
+  selector: 'app-edit-employee-form',
+  templateUrl: './edit-employee-form.component.html',
+  styleUrls: ['./edit-employee-form.component.scss']
 })
-export class EmployeeFormComponent implements OnInit, OnDestroy {
-  
+export class EditEmployeeFormComponent implements OnInit, OnDestroy {
+
   des: any[] = []
   dep: any[] = []
   role: any[] = []
-  employeeForm: FormGroup
+  employeeId: any
+  editEmployeeForm: FormGroup
   private destroy$ = new Subject<void>();
   
-  constructor(private _matSnackBar: MatSnackBar, private fb: FormBuilder, private _empService: EmployeeService, private _roleService: RoleService, private router: Router) {
-     this.employeeForm = this.fb.group({
+  constructor(private _activeRoute: ActivatedRoute, private _matSnackBar: MatSnackBar, private fb: FormBuilder, private _empService: EmployeeService, private _roleService: RoleService, private router: Router) {
+     this.editEmployeeForm = this.fb.group({
         name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(10)]],
-        confirmPass: ['', [Validators.required, Validators.minLength(10)]],
         phone: ['', [Validators.required, Validators.pattern(/^\+92\d{10}$/)]],
         address: ['', [Validators.required]],
         designName: ['', [Validators.required]],
         department: ['', [Validators.required]],
         joiningDate: ['', [Validators.required]],
         description: [''],
-        role: ['']
+        role: [''],
+        active: [''],
+        is_admin: ['']
       })  
   }
 
@@ -50,6 +43,35 @@ export class EmployeeFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getDesDep()
     this.getRole()
+
+    this.employeeId = this._activeRoute.snapshot.paramMap.get('id')
+
+    if(this.employeeId) {
+      this._empService.editEmpById(this.employeeId).pipe(takeUntil(this.destroy$)).subscribe(res => {
+         if (res && res.data) {
+        const joiningDateFormatted = res.data.joiningDate
+          ? new Date(res.data.joiningDate).toISOString().split('T')[0]
+          : '';
+          
+
+        this.editEmployeeForm.patchValue({
+         
+          name: res.data.name,
+          email: res.data.email,
+          address: res.data.address,
+          phone: res.data.phone,
+          department: res.data.department,
+          role: res.data.role,
+          designName: res.data.designName,
+          joiningDate: joiningDateFormatted,
+          description: res.data.description,
+          active: res.data.active,
+          is_admin: res.data.is_admin
+        })
+        }
+      })
+    }
+    
   }
 
   getDesDep(): void {
@@ -71,22 +93,21 @@ export class EmployeeFormComponent implements OnInit, OnDestroy {
   }
 
 onSubmit() {
-   if(this.employeeForm.invalid) {
+   if(this.editEmployeeForm.invalid) {
         return
       }
-      this.employeeForm.disable()
-      this._empService.register(this.employeeForm.value).subscribe({
+      this.editEmployeeForm.disable()
+      this._empService.updateUser(this.employeeId, this.editEmployeeForm.value).subscribe({
         next: (response) => {
-          this.employeeForm.enable()
+          this.editEmployeeForm.enable()
            if(response.success) {
               this._matSnackBar.open(response.message, 'x', {
                 duration: 1500,
                 horizontalPosition: 'center',
                 verticalPosition: 'bottom'
               })
-              this.employeeForm.reset()
-              Object.keys(this.employeeForm.controls).forEach(key => {
-                this.employeeForm.get(key)?.setErrors(null);
+              Object.keys(this.editEmployeeForm.controls).forEach(key => {
+                this.editEmployeeForm.get(key)?.setErrors(null);
               });
               setTimeout(() => {
                 this.router.navigate(['app/user-managment/employee/employeeListActive'])
@@ -100,11 +121,11 @@ onSubmit() {
             }
         },
         error: (err: any) => {
-          this.employeeForm.enable()
+          this.editEmployeeForm.enable()
           console.log(err);
   
-        Object.keys(this.employeeForm.controls).forEach(key => {
-          this.employeeForm.get(key)?.setErrors(null);
+        Object.keys(this.editEmployeeForm.controls).forEach(key => {
+          this.editEmployeeForm.get(key)?.setErrors(null);
         });
   
         this._matSnackBar.open('Something went wrong. Please try again.', 'x', {
@@ -116,7 +137,5 @@ onSubmit() {
         }
       })
     }
+
 }
-
-
-

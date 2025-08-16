@@ -18,8 +18,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
-
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { EditEmployeeFormComponent } from './employee/edit-employee-form/edit-employee-form.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 const routes:Routes =[
@@ -31,8 +36,15 @@ const routes:Routes =[
                 path:'employee',
                 children:[
                     {
+                        
                         path:'employeeForm',
                         component:EmployeeFormComponent
+                    },
+
+                     {
+                        
+                        path:'edit-employee-form/:id',
+                        component: EditEmployeeFormComponent
                     },
                     {
                         path:'employeeListActive',
@@ -81,13 +93,20 @@ const routes:Routes =[
         MatInputModule,
         MatSelectModule,
         MatPaginatorModule,
+        MatChipsModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatGridListModule,
+        MatDatepickerModule,
+        MatCheckboxModule
 
     ],
     declarations: [
         UserManagmentComponent,
         EmployeeFormComponent,
         EmployeeListActiveComponent,
-        EmployeeListUnactiveComponent
+        EmployeeListUnactiveComponent,
+        EditEmployeeFormComponent
     ],
     exports: [
         UserManagmentComponent,

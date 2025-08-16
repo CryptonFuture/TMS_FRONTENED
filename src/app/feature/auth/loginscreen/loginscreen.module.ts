@@ -10,6 +10,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select'
 
 
 @NgModule({
@@ -22,9 +26,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
             MatFormFieldModule,
             MatInputModule,
             MatCheckboxModule,
-            MatButtonModule
-        
-           
+            MatButtonModule,
+            MatSnackBarModule,
+            HttpClientModule,
+            MatSelectModule
 
     ],
     declarations: [
@@ -32,6 +37,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ],
     exports: [
         LoginscreenComponent,
+    ],
+    providers: [
+       
     ]
 })
 export class LoginscreenModule {
