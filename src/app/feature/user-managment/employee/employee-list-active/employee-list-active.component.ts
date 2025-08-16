@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { EmployeeService } from 'src/app/core/employee/employee.service';
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 export interface Employee {
   name: string;
@@ -19,16 +23,18 @@ export interface Employee {
   templateUrl: 'employee-list-active.component.html',
   styleUrls: ['employee-list-active.component.scss']
 })
-export class EmployeeListActiveComponent implements OnInit {
+export class EmployeeListActiveComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'no', 'name', 'email', 'address', 'contactNo', 'department',
     'status', 'joinDate', 'description', 'action'
   ];
   dataSource = new MatTableDataSource<Employee>([]);
 
+  private destroy$ = new Subject<void>();
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router) {}
+  constructor(private _matSnackBar: MatSnackBar, private _matDialog: MatDialog, private router: Router, private _empServices: EmployeeService) {}
 
   ngOnInit(): void {
     this.loadActiveEmployees();
@@ -38,6 +44,23 @@ export class EmployeeListActiveComponent implements OnInit {
       const searchStr = (data.name + data.email).toLowerCase();
       return searchStr.includes(filter);
     };
+
+    this.getActiveEmp()
+    
+  }
+
+  getActiveEmp(): void {
+    this._empServices.getActiveEmp().pipe(takeUntil(this.destroy$)).subscribe(res => {
+      this.dataSource = res
+
+      console.log(this.dataSource, 'data');
+      
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   loadActiveEmployees() {
@@ -52,9 +75,8 @@ export class EmployeeListActiveComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  editEmployee(employee: Employee) {
-    localStorage.setItem('editEmployee', JSON.stringify(employee));
-    this.router.navigate(['app/user-managment/employee/employeeForm']);
+  editEmployee(id: string) {
+    this.router.navigate(['app/user-managment/employee/edit-employee-form', id]);
   }
 
   deleteEmployee(employee: Employee) {
@@ -76,4 +98,37 @@ export class EmployeeListActiveComponent implements OnInit {
   createEmployee() {
     this.router.navigate(['app/user-managment/employee/employeeForm']);
   }
+
+     onDelete(id: string): void {
+           this._empServices.deleteEmp(id).subscribe({
+        next: (response) => {
+          if(response.success) {
+             this._matSnackBar.open(response.message, 'x', {
+              duration: 1500,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom'
+            })
+
+          } else {
+             this._matSnackBar.open(response.error || 'Login failed. Please try again.', 'x', {
+              duration: 2000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom'
+            });
+          }
+          this.getActiveEmp()
+
+        },
+        error: (err) => {
+           const errorMessage = err?.error?.error || 'Something went wrong on server.';
+            this._matSnackBar.open(errorMessage, 'x', {
+              duration: 2000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom'
+            });
+          
+        }
+      })
+        }
+     
 }

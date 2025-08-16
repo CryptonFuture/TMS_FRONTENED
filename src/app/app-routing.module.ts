@@ -30,12 +30,12 @@ const routes: Routes = [
 
 
        {
-        path:'feature/login',
+        path:'',
         component:LoginscreenComponent
        },
        {
           path :'',
-          redirectTo:'dashboard',
+          redirectTo:'login',
           pathMatch: 'full',
          },
          {
