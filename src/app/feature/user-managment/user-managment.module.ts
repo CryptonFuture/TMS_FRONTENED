@@ -25,6 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { EditEmployeeFormComponent } from './employee/edit-employee-form/edit-employee-form.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ViewEmployeeListComponent } from './employee/view-employee-list/view-employee-list.component';
 
 
 const routes:Routes =[
@@ -53,7 +54,13 @@ const routes:Routes =[
                     {
                         path:'employeeListUnactive',
                         component:EmployeeListUnactiveComponent
-                    }
+                    },
+
+                    {
+                        path:'view-employee-list/:id',
+                        component:ViewEmployeeListComponent
+                    },
+
                 ],
                 
             },
@@ -106,7 +113,8 @@ const routes:Routes =[
         EmployeeFormComponent,
         EmployeeListActiveComponent,
         EmployeeListUnactiveComponent,
-        EditEmployeeFormComponent
+        EditEmployeeFormComponent,
+        ViewEmployeeListComponent
     ],
     exports: [
         UserManagmentComponent,

@@ -79,6 +79,8 @@ export class EmployeeListActiveComponent implements OnInit, OnDestroy {
     this.router.navigate(['app/user-managment/employee/edit-employee-form', id]);
   }
 
+
+
   deleteEmployee(employee: Employee) {
     const employees = JSON.parse(localStorage.getItem('employees') || '[]');
     const updatedEmployees = employees.filter((emp: any) => emp.email !== employee.email);
@@ -86,9 +88,8 @@ export class EmployeeListActiveComponent implements OnInit, OnDestroy {
     this.loadActiveEmployees();
   }
 
-  viewEmployee(employee: Employee) {
-    localStorage.setItem('viewEmployee', JSON.stringify(employee));
-    this.router.navigate(['/employee/view']);
+  viewEmployee(id: string) {
+    this.router.navigate(['app/user-managment/employee/view-employee-list', id]);
   }
 
   goToUnactiveEmployee() {

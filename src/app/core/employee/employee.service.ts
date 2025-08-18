@@ -11,12 +11,14 @@ export class EmployeeService {
   private _getActiveEmployee = new BehaviorSubject<any[]>([])
   private _getInActiveEmployee = new BehaviorSubject<any[]>([])
   private _getdesDep = new BehaviorSubject<any[]>([])
- private _getEmpById = new BehaviorSubject<any[]>([])
+  private _getEmpById = new BehaviorSubject<any[]>([])
+  private _viewEmpById = new BehaviorSubject<any>({})
 
   desDep: Observable<any[]> = this._getdesDep.asObservable()
   activeEmp: Observable<any[]> = this._getActiveEmployee.asObservable()
   InactiveEmp: Observable<any[]> = this._getInActiveEmployee.asObservable()
   empById: Observable<any[]> = this._getEmpById.asObservable()
+  viewEmyById: Observable<any> = this._viewEmpById.asObservable()
 
   constructor(private _httpclient: HttpClient) {}
 
@@ -58,6 +60,22 @@ export class EmployeeService {
       tap(response => {
         const EmpById = (response as any).data ?? []
         this._getEmpById.next(EmpById)
+
+      }),
+      catchError((error) => {
+         console.error('Error fetching edit emp id Employee', error);
+            return throwError(
+              () => new Error('Error fetching edit emp id Employee')
+            );
+      })
+     ) 
+    }
+
+    viewEmpById(id: any): Observable<any> {
+     return this._httpclient.get(`${environment.baseUrl}/api/v1/viewEmpById/${id}`).pipe(
+      tap(response => {
+        const ViewEmpById = (response as any).data ?? {}
+        this._viewEmpById.next(ViewEmpById)
 
       }),
       catchError((error) => {
