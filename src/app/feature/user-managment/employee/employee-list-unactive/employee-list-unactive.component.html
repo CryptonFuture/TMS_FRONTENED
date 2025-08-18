@@ -6,7 +6,13 @@
       <button mat-raised-button color="accent" (click)="goToActiveEmployee()">
         View Active Employees
       </button>
+      
     </div>
+
+     <mat-form-field appearance="fill">
+          <input matInput name="name" placeholder="search..." type="search"  required />
+          
+        </mat-form-field>
   </div>
 
   <!-- Table -->
@@ -74,7 +80,7 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="viewEmployee(element._id)">
         <mat-icon>visibility</mat-icon>
         <span>View</span>
       </button>

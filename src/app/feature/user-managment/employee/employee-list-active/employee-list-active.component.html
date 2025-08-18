@@ -9,7 +9,13 @@
       <button mat-raised-button color="primary" (click)="createEmployee()">
         Create Employee
       </button>
+
+      
     </div>
+     <mat-form-field appearance="fill">
+          <input matInput name="name" placeholder="search..."  type="search" required />
+          
+        </mat-form-field>
   </div>
 
   <!-- Table -->
@@ -76,8 +82,8 @@
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item (click)="viewEmployee(element._id)">
         <mat-icon>visibility</mat-icon>
         <span>View</span>
       </button>

@@ -81,9 +81,8 @@ export class EmployeeListUnactiveComponent implements OnInit,OnDestroy {
     this.router.navigate(['app/user-managment/employee/edit-employee-form', id]);
   }
 
-  viewEmployee(employee: Employee) {
-    localStorage.setItem('viewEmployee', JSON.stringify(employee));
-    this.router.navigate(['/employee/view']);
+  viewEmployee(id: string) {
+    this.router.navigate(['app/user-managment/employee/view-employee-list', id]);
   }
 
   goToActiveEmployee() {
