@@ -81,6 +81,7 @@ const routes:Routes =[
         MatInputModule,
         MatSelectModule,
         MatPaginatorModule,
+        
 
     ],
     declarations: [

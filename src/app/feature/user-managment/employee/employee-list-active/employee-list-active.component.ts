@@ -1,18 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import {  Router } from '@angular/router';
+import { UserService } from 'src/app/core/services/user.services';
+import { UserFormInterface } from 'src/app/shared/interface/user.interface';
 
-export interface Employee {
-  name: string;
-  email: string;
-  address: string;
-  contactNo: string;
-  department: string;
-  status: string;
-  joinDate: string;
-  description: string;
-}
 
 @Component({
   selector: 'employee-list-active',
@@ -21,59 +13,75 @@ export interface Employee {
 })
 export class EmployeeListActiveComponent implements OnInit {
   displayedColumns: string[] = [
-    'no', 'name', 'email', 'address', 'contactNo', 'department',
+    'no', 'name', 'email','password', 'address','designName', 'contactNo', 'department',
     'status', 'joinDate', 'description', 'action'
   ];
-  dataSource = new MatTableDataSource<Employee>([]);
+  dataSource = new MatTableDataSource<UserFormInterface>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router) {}
+  constructor(private routes: Router, private userservices:UserService ) {}
 
   ngOnInit(): void {
-    this.loadActiveEmployees();
+    this.getUserData();
 
     // Yeh custom filter set karega taake name OR email dono match ho sake
-    this.dataSource.filterPredicate = (data: Employee, filter: string) => {
+    this.dataSource.filterPredicate = (data: UserFormInterface, filter: string) => {
       const searchStr = (data.name + data.email).toLowerCase();
       return searchStr.includes(filter);
     };
   }
 
-  loadActiveEmployees() {
-    const employees = JSON.parse(localStorage.getItem('employees') || '[]');
-    const activeEmployees = employees.filter((emp: any) => emp.status?.toLowerCase() === 'active');
-    this.dataSource.data = activeEmployees;
-    this.dataSource.paginator = this.paginator;
-  }
+  getUserData() {
+  this.userservices.getUserData().subscribe(
+    (data: any) => {
+      this.dataSource.data = data.filter(
+        (user: UserFormInterface) => user.status !== 'unactive'
+      );
+      console.log('Filtered Users (excluding Unactive):', this.dataSource.data);
+    },
+    (error: any) => {
+      console.log('Fetching Error', error);
+    }
+  );
+}
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
-  editEmployee(employee: Employee) {
-    localStorage.setItem('editEmployee', JSON.stringify(employee));
-    this.router.navigate(['app/user-managment/employee/employeeForm']);
-  }
+  editEmployee(user:UserFormInterface):void{
+        this.routes.navigate(['app/user-managment/employee/employeeForm'],{queryParams:{id : user._id}})
 
-  deleteEmployee(employee: Employee) {
-    const employees = JSON.parse(localStorage.getItem('employees') || '[]');
-    const updatedEmployees = employees.filter((emp: any) => emp.email !== employee.email);
-    localStorage.setItem('employees', JSON.stringify(updatedEmployees));
-    this.loadActiveEmployees();
-  }
+     }
+     
 
-  viewEmployee(employee: Employee) {
+  deleteEmployee(userid?: string): void {
+  if (confirm('Are you sure want to delete this User?')) {
+    this.userservices.deleteUserById(userid || '').subscribe(
+      () => {
+        this.dataSource.data = this.dataSource.data.filter((p) => p._id !== userid);
+        alert('User deleted successfully');
+      },
+      (error: any) => {
+        console.error('Error Deleting user:', error);
+      }
+    );
+  }
+}
+
+  viewEmployee(employee: UserFormInterface) {
     localStorage.setItem('viewEmployee', JSON.stringify(employee));
-    this.router.navigate(['/employee/view']);
+    this.routes.navigate(['/employee/view']);
   }
 
   goToUnactiveEmployee() {
-    this.router.navigate(['app/user-managment/employee/employeeListUnactive']);
+    this.routes.navigate(['app/user-managment/employee/employeeListUnactive']);
   }
 
   createEmployee() {
-    this.router.navigate(['app/user-managment/employee/employeeForm']);
+    this.routes.navigate(['app/user-managment/employee/employeeForm']);
   }
 }
