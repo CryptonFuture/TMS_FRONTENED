@@ -10,12 +10,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
     imports: [
           
             FormsModule,
+            CommonModule,
             ReactiveFormsModule,
             BrowserAnimationsModule,
             MatCardModule,

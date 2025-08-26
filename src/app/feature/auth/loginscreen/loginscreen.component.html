@@ -2,22 +2,22 @@
   <mat-card>
     <h2 class="title"><span>TMS</span> Login</h2>
 
-    <form>
+    <form [formGroup]="loginForm">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" placeholder="Enter your email" required>
+        <input matInput type="email"formControlName="email" placeholder="Enter your email" required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" placeholder="Enter your password" required>
+        <input matInput type="password" formControlName="password" placeholder="Enter your password" required>
       </mat-form-field>
 
       <mat-checkbox>Agree to Continue</mat-checkbox>
 
       <div class="actions">
         <a href="#">Forgot password?</a>
-        <button mat-flat-button color="primary" type="submit">Login</button>
+        <button mat-flat-button color="primary" type="submit"(click)="submit()">Login</button>
       </div>
     </form>
   </mat-card>

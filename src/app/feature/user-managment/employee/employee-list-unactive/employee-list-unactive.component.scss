@@ -4,16 +4,20 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  
+  
 }
 
 .top-buttons button {
   font-weight: 500;
+   
 }
 
 /* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .mat-header-cell {
@@ -51,7 +55,7 @@ th.mat-header-cell:last-child {
 @media (max-width: 768px) {
   .top-buttons {
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
   }
 
   table {
