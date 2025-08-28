@@ -6,13 +6,20 @@
       <mat-label>Search by Name or Email</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search..." />
     </mat-form-field>
+<div class="top-bar-buttons">
+  <button mat-raised-button color="accent" (click)="goToUnactiveEmployee()">
+    View UnActive Employees
+  </button>
 
-    <div class="top-bar-buttons">
-      <button mat-raised-button color="accent" (click)="goToUnactiveEmployee()">        View UnActive Employees
-</button>
-      <button mat-raised-button color="primary" (click)="createEmployee()">Create Employee</button>
-    </div>
-  </div>
+  <button mat-raised-button color="warn" (click)="assignEmployeeToClient()">
+    Assign Employee To Client
+  </button>
+
+  <button mat-raised-button color="primary" (click)="createEmployee()">
+    Create Employee
+  </button>
+</div>
+
 
   <!-- Table -->
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -111,6 +118,12 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align:center; padding: 16px; background-color: rgb(164, 159, 159);">
+      🚫 No active employees found
+    </td>
+  </tr>
   </table>
 
   <!-- Pagination -->

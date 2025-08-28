@@ -11,6 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { CommonModule } from '@angular/common';
             MatFormFieldModule,
             MatInputModule,
             MatCheckboxModule,
-            MatButtonModule
+            MatButtonModule,
+            MatSnackBarModule
         
            
 

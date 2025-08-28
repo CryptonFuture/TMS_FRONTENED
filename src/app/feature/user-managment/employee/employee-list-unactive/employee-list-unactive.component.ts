@@ -25,8 +25,13 @@ export class EmployeeListUnactiveComponent implements OnInit {
  
    ngOnInit(): void {
      this.getUserData();
- 
      
+
+      this.dataSource.filterPredicate = (data: UserFormInterface, filter: string) => {
+      const searchStr = (data.name + data.email).toLowerCase();
+      return searchStr.includes(filter);
+ 
+      }
    }
  
    getUserData(){
@@ -71,11 +76,10 @@ export class EmployeeListUnactiveComponent implements OnInit {
     this.routes.navigate(['/employee/view']);
   }
 
-  goToActiveEmployee() {
-    this.routes.navigate(['app/user-managment/employee/employeeListActive']);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
-  createEmployee() {
-    this.routes.navigate(['app/user-managment/employee/employeeForm']);
-  }
+  
 }

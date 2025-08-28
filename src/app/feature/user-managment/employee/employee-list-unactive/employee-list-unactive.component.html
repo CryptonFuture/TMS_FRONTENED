@@ -2,14 +2,12 @@
 
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="top-bar-buttons">
-      <button mat-raised-button color="accent" (click)="goToActiveEmployee()">
-        View Active Employees
-      </button>
-      <button mat-raised-button color="primary" (click)="createEmployee()">
-        Create Employee
-      </button>
-    </div>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search by Name or Email</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search..." />
+    </mat-form-field>
+
+   
   </div>
 
   <!-- Table -->
@@ -109,6 +107,13 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align:center; padding: 16px; background-color: rgb(164, 159, 159);">
+      🚫 No inactive employees found
+    </td>
+  </tr>
+
   </table>
 
   <!-- Pagination -->
