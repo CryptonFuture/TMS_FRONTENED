@@ -19,6 +19,10 @@ const routes: Routes = [
         loadChildren:()=> import('./feature/user-managment/user-managment.module').then(m => m.UserManagmentModule)
 
       },
+      {
+        path:'assign-employee-to-client',
+        loadChildren:()=> import('./feature/assign-employee-to-client/assign-enployee-to-client.module').then(m => m.AssignEnployeeToClientModule)
+      }
 
       
 

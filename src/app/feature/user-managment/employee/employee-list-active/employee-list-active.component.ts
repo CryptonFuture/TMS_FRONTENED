@@ -25,7 +25,6 @@ export class EmployeeListActiveComponent implements OnInit {
   ngOnInit(): void {
     this.getUserData();
 
-    // Yeh custom filter set karega taake name OR email dono match ho sake
     this.dataSource.filterPredicate = (data: UserFormInterface, filter: string) => {
       const searchStr = (data.name + data.email).toLowerCase();
       return searchStr.includes(filter);
@@ -83,5 +82,8 @@ export class EmployeeListActiveComponent implements OnInit {
 
   createEmployee() {
     this.routes.navigate(['app/user-managment/employee/employeeForm']);
+  }
+  assignEmployeeToClient(){
+    this.routes.navigate(['app/assign-employee-to-client/assign/assignEmployeeForm'])
   }
 }
