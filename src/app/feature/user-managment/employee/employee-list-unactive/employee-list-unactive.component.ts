@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.services';
+import { ConfirmDialogComponent } from 'src/app/shared/component/confirm-dialog/confirm-dialog.component';
 import { UserFormInterface } from 'src/app/shared/interface/user.interface';
 
 
@@ -21,7 +24,7 @@ export class EmployeeListUnactiveComponent implements OnInit {
  
    @ViewChild(MatPaginator) paginator!: MatPaginator;
  
-   constructor(private routes: Router, private userservices:UserService ) {}
+   constructor(private routes: Router, private userservices:UserService, private snackBar:MatSnackBar,private dialog:MatDialog ) {}
  
    ngOnInit(): void {
      this.getUserData();
@@ -56,19 +59,34 @@ export class EmployeeListUnactiveComponent implements OnInit {
       }
       
  
-   deleteEmployee(userid?: string): void {
-   if (confirm('Are you sure want to delete this User?')) {
-     this.userservices.deleteUserById(userid || '').subscribe(
-       () => {
-         this.dataSource.data = this.dataSource.data.filter((p) => p._id !== userid);
-         alert('User deleted successfully');
-       },
-       (error: any) => {
-         console.error('Error Deleting user:', error);
-       }
-     );
-   }
- }
+  deleteEmployee(userid?: string): void {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: { message: 'Are you sure you want to delete this User?' }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.userservices.deleteUserById(userid || '').subscribe(
+            () => {
+              this.dataSource.data = this.dataSource.data.filter((p) => p._id !== userid);
+              this.snackBar.open('✅ User deleted successfully!', 'Close', {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+              });
+            },
+            (error: any) => {
+              console.error('Error Deleting user:', error);
+              this.snackBar.open('❌ Failed to delete user!', 'Close', {
+                duration: 3000,
+                panelClass: ['error-snackbar']
+              });
+            }
+          );
+        }
+      });
+    }
+  
  
 
   viewEmployee(employee: UserFormInterface) {

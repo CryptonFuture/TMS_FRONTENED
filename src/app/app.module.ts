@@ -7,6 +7,8 @@ import { LoginscreenModule } from './feature/auth/loginscreen/loginscreen.module
 import { FeatureLayoutModule } from './layout/feature-layout/feature-layout.module';
 import { DashboardModule } from './feature/dashboard/dashboard.module';
 import { HttpClientModule } from '@angular/common/http';
+import {  MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogModule } from './shared/component/confirm-dialog/confirm-dialog.module';
 
 
 
@@ -22,6 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     FeatureLayoutModule,
     DashboardModule,
     HttpClientModule,
+    ConfirmDialogModule
+    
 
     
     
