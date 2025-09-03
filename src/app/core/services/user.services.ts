@@ -17,8 +17,8 @@ export class UserService {
 
 
 
-    getUserData(): Observable<UserFormInterface> {
-        return this.http.get<UserFormInterface>(`${this.baseUrl}getall`);
+    getUserData(): Observable<UserFormInterface[]> {
+        return this.http.get<UserFormInterface[]>(`${this.baseUrl}getall`);
     }
 
     getUserById(id: string): Observable<UserFormInterface> {

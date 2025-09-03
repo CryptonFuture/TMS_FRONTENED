@@ -6,9 +6,16 @@
         <mat-icon>dashboard</mat-icon>
         <span *ngIf="isExpanded">Dashboard</span>
       </button>
+
       <button mat-button (click)="goToPage('employees')" [class.active]="selected === 'employees'">
         <mat-icon>people</mat-icon>
         <span *ngIf="isExpanded">Employees</span>
+      </button>
+
+      <!-- 🔹 New Tasks Button -->
+      <button mat-button (click)="goToPage('task')" [class.active]="selected === 'task'">
+        <mat-icon>assignment</mat-icon>
+        <span *ngIf="isExpanded">Tasks</span>
       </button>
     </div>
   </mat-drawer>

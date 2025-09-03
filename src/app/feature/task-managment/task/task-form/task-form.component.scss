@@ -1,0 +1,12 @@
+// component css goes here
+.task-form {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  align-items: center;
+  
+
+  mat-form-field {
+    width: 200px;
+  }
+}
