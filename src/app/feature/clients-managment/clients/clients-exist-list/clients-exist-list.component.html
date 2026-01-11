@@ -1,6 +1,15 @@
-<div class="employee-list-container">
+<!--component html goes here -->
+<div class="client-list-container">
 
-  <!-- 🔍 Top Bar -->
+
+
+  <!-- 🔹 Top Tabs -->
+  <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChange($event.index)">
+    <mat-tab label="Clients Exist"></mat-tab>
+    <mat-tab label="Non Clients Exist"></mat-tab>
+  </mat-tab-group>
+
+  <!-- 🔹 Top Bar (Search + Create Button) -->
   <div class="top-bar">
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>Search by Name or Email</mat-label>
@@ -10,41 +19,28 @@
       </button>
     </mat-form-field>
 
-    <div class="top-bar-buttons">
-      <button mat-raised-button color="accent" (click)="goToUnactiveEmployee()">
-        <mat-icon>group_off</mat-icon>
-        View UnActive Employees
-      </button>
-
-      <button mat-raised-button color="warn" (click)="assignEmployeeToClient()">
-        <mat-icon>assignment_ind</mat-icon>
-        Assign Employee To Client
-      </button>
-
-      <button mat-raised-button color="primary" (click)="createEmployee()">
-        <mat-icon>person_add</mat-icon>
-        Create Employee
-      </button>
-    </div>
+    <button mat-raised-button color="primary" (click)="createClients()">
+      <mat-icon>person_add</mat-icon> Create Client
+    </button>
   </div>
 
-  <!-- 🧑 Employees Table -->
+  <!-- 🔹 Client Table -->
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- Sr.No -->
     <ng-container matColumnDef="no">
       <th mat-header-cell *matHeaderCellDef>
-        #
+        Sr.#
       </th>
-      <td mat-cell *matCellDef="let user; let i = index">{{ i + 1 }}</td>
+      <td mat-cell *matCellDef="let client; let i = index"> {{i + 1}} </td>
     </ng-container>
 
     <!-- Name -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-         Name
+        Name
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+      <td mat-cell *matCellDef="let client">{{client.name}}</td>
     </ng-container>
 
     <!-- Email -->
@@ -52,99 +48,90 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Email
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      <td mat-cell *matCellDef="let client">{{client.email}}</td>
     </ng-container>
 
     <!-- Password -->
-    <!-- <ng-container matColumnDef="password">
-      <th mat-header-cell *matHeaderCellDef>
-         Password
+    <ng-container matColumnDef="password">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Password
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.password }}</td>
-    </ng-container> -->
+      <td mat-cell *matCellDef="let client">{{client.password}}</td>
+    </ng-container>
 
     <!-- Address -->
     <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      Address
+        Address
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.address }}</td>
-    </ng-container>
-
-    <!-- DesignName -->
-    <ng-container matColumnDef="designName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      Designation
-      </th>
-      <td mat-cell *matCellDef="let user">{{ user.designName }}</td>
+      <td mat-cell *matCellDef="let client">{{client.address}}</td>
     </ng-container>
 
     <!-- Contact No -->
     <ng-container matColumnDef="contactNo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      Contact
+        Contact No
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.phone }}</td>
-    </ng-container>
-
-    <!-- Department -->
-    <ng-container matColumnDef="department">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      Department
-      </th>
-      <td mat-cell *matCellDef="let user">{{ user.department }}</td>
+      <td mat-cell *matCellDef="let client">{{client.phone}}</td>
     </ng-container>
 
     <!-- Status -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-       Status
+        Status
       </th>
-      <td mat-cell *matCellDef="let user">
+      <td mat-cell *matCellDef="let client">
         <span [ngClass]="{
-          'status-active': user.status === 'Active',
-          'status-inactive': user.status === 'Inactive'
-        }">
-          {{ user.status }}
+          'status-Exist': client.status === 'Exist',
+          'status-nonExist': client.status === 'nonExist'
+        }">{{client.status}}
         </span>
       </td>
     </ng-container>
 
-    <!-- Join Date -->
-    <ng-container matColumnDef="joinDate">
+    <!-- Start Time -->
+    <ng-container matColumnDef="startTime">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-         Join Date
+        Start Time
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.joiningDate | date }}</td>
+      <td mat-cell *matCellDef="let client">{{client.startTime}}</td>
+    </ng-container>
+
+    <!-- End Time -->
+    <ng-container matColumnDef="endTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        End Time
+      </th>
+      <td mat-cell *matCellDef="let client">{{client.endTime}}</td>
     </ng-container>
 
     <!-- Description -->
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-         Description
+        Description
       </th>
-      <td mat-cell *matCellDef="let user">{{ user.description }}</td>
+      <td mat-cell *matCellDef="let client">{{client.description}}</td>
     </ng-container>
 
     <!-- Action -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>
-         Action
+        Action
       </th>
-      <td mat-cell *matCellDef="let user">
+      <td mat-cell *matCellDef="let client">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="editEmployee(user)">
+          <button mat-menu-item (click)="editClient(client)">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>
-          <button mat-menu-item (click)="deleteEmployee(user._id)">
+          <button mat-menu-item (click)="deleteClient(client._id)">
             <mat-icon>delete</mat-icon>
             <span>Delete</span>
           </button>
-          <button mat-menu-item (click)="viewEmployee(user._id)">
+          <button mat-menu-item (click)="viewClient(client._id)">
             <mat-icon>visibility</mat-icon>
             <span>View</span>
           </button>
@@ -159,13 +146,12 @@
     <!-- No Data -->
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" [attr.colspan]="displayedColumns.length"
-          style="text-align:center; padding: 16px; background-color: rgb(164, 159, 159); color:#fff;">
-        🚫 No active employees found
+        style="text-align:center; padding: 16px; background-color: rgb(240, 240, 240);">
+        🚫 No Clients Found
       </td>
     </tr>
   </table>
 
-  <!-- 📄 Pagination -->
+  <!-- Pagination -->
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
 </div>

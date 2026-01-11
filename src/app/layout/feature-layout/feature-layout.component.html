@@ -20,6 +20,15 @@
         <span *ngIf="isExpanded">Employees</span>
       </button>
 
+
+         <button mat-button  (click)="goToPage('app/clients-managment/clients/clientsExistList')" [class.active]="selected === 'app/clients-managment/clients/clientsExistList'">
+        <mat-icon>groups</mat-icon>
+        <span *ngIf="isExpanded">Clients</span>
+      </button>
+
+
+
+
       <!-- 🔹 Tasks -->
       <button mat-button (click)="goToPage('app/task-managment/task/taskList')" [class.active]="selected === 'app/task-managment/task/taskList'">
         <mat-icon>assignment</mat-icon>
@@ -27,6 +36,8 @@
       </button>
     </div>
   </mat-drawer>
+
+  
 
   <!-- Main content -->
   <mat-drawer-content>

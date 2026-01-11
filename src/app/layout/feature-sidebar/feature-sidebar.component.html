@@ -12,6 +12,12 @@
         <span *ngIf="isExpanded">Employees</span>
       </button>
 
+      <button mat-button (click)="goToPage('clients')" [class.active]="selected === 'clients'">
+        <mat-icon>groups</mat-icon>
+        <span *ngIf="isExpanded">Clients</span>
+      </button>
+
+
       <!-- 🔹 New Tasks Button -->
       <button mat-button (click)="goToPage('task')" [class.active]="selected === 'task'">
         <mat-icon>assignment</mat-icon>

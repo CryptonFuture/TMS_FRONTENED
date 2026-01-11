@@ -31,7 +31,13 @@ const routes: Routes = [
         path:'task-managment',
         canActivate: [AuthGuard],
         loadChildren:()=> import('./feature/task-managment/task-managment.module').then(m => m.TaskManagmentModule)
+      },
+      {
+        path:'clients-managment',
+        canActivate:[AuthGuard],
+        loadChildren:() => import('./feature/clients-managment/clients-managment.module').then(m => m.ClientsManagmentModule )
       }
+      
 
       
 

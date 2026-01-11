@@ -1,50 +1,139 @@
-<div class="dashboard-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px;">
+<div class="dashboard-cards"
+  style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px;">
 
-  <!-- Card 1: Employees -->
+  <!-- ================= Employees ================= -->
   <mat-card appearance="outlined">
     <mat-card-header>
       <mat-icon mat-card-avatar color="primary">people</mat-icon>
-      <mat-card-title>No. of Employees</mat-card-title>
+      <mat-card-title>Active Employees</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h2>{{ userData.length }}</h2>
-      <p>Active Employee</p>
+      <h2>{{ activeUsers  }}</h2>
+      <p>Currently Working</p>
     </mat-card-content>
   </mat-card>
 
-  <!-- Card 2: Projects -->
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-icon mat-card-avatar color="accent">folder_open</mat-icon>
-      <mat-card-title>No. of Projects</mat-card-title>
+      <mat-icon mat-card-avatar color="warn">person_off</mat-icon>
+      <mat-card-title>Inactive Employees</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <!-- <h2>{{ projectData.length }}</h2> -->
-      <p>0</p>
+      <h2>{{inactiveUsers  }}</h2>
+      <p>Not Working</p>
     </mat-card-content>
   </mat-card>
 
-  <!-- Card 3: Tasks -->
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-icon mat-card-avatar color="warn">task_alt</mat-icon>
-      <mat-card-title>No. of Tasks</mat-card-title>
+      <mat-icon mat-card-avatar color="accent">groups</mat-icon>
+      <mat-card-title>Total Employees</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <!-- <h2>{{ taskData.length }}</h2> -->
-      <p>0</p>
+      <h2>{{ totalUsers }}</h2>
+      <p>Overall Employees</p>
     </mat-card-content>
   </mat-card>
 
-  <!-- Card 4: Clients -->
+  <!-- ================= Projects ================= -->
   <mat-card appearance="outlined">
     <mat-card-header>
-      <mat-icon mat-card-avatar color="primary">groups</mat-icon>
-      <mat-card-title>No. of Clients</mat-card-title>
+      <mat-icon mat-card-avatar color="warn">folder_open</mat-icon>
+      <mat-card-title>Pending Projects</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <!-- <h2>{{ clientData.length }}</h2> -->
-      <p>0</p>
+      <!-- <h2>{{ pendingProjects.length }}</h2> -->
+      <p>In Progress</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">check_circle</mat-icon>
+      <mat-card-title>Completed Projects</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <h2>{{ completedProjects.length }}</h2> -->
+      <p>Finished Successfully</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="accent">dashboard</mat-icon>
+      <mat-card-title>Total Projects</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <h2>{{ pendingProjects.length + completedProjects.length }}</h2> -->
+      <p>All Projects</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ================= Tasks ================= -->
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="warn">pending_actions</mat-icon>
+      <mat-card-title>Pending Tasks</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <h2>{{ pendingTasks.length }}</h2> -->
+      <p>Work Remaining</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">task_alt</mat-icon>
+      <mat-card-title>Completed Tasks</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <h2>{{ completedTasks.length }}</h2> -->
+      <p>Done Tasks</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="accent">assignment</mat-icon>
+      <mat-card-title>Total Tasks</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <h2>{{ pendingTasks.length + completedTasks.length }}</h2> -->
+      <p>All Tasks</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ================= Clients ================= -->
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">emoji_people</mat-icon>
+      <mat-card-title>Active Clients</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h2>{{ activeClients }}</h2>
+      <p>Working With Us</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="warn">person_remove</mat-icon>
+      <mat-card-title>Inactive Clients</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h2>{{ inactiveClients }}</h2>
+      <p>Not Engaged</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="accent">group_work</mat-icon>
+      <mat-card-title>Total Clients</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h2>{{ totalClients }}</h2>
+      <p>All Clients</p>
     </mat-card-content>
   </mat-card>
 
