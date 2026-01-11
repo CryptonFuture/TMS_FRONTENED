@@ -1,89 +1,100 @@
 <div class="employee-list-container">
 
-  <!-- Top Bar -->
+  <!-- 🔍 Top Bar -->
   <div class="top-bar">
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>Search by Name or Email</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search..." />
+      <button mat-icon-button matSuffix disabled>
+        <mat-icon>search</mat-icon>
+      </button>
     </mat-form-field>
-
-   
   </div>
 
-  <!-- Table -->
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- 🧑 Inactive Employees Table -->
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- Sr.No -->
-   <ng-container matColumnDef="no">
-      <th mat-header-cell *matHeaderCellDef> Sr.# </th>
-      <td mat-cell *matCellDef="let user; let i = index"> {{i + 1}} </td>
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let user; let i = index">{{ i + 1 }}</td>
     </ng-container>
 
     <!-- Name -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let user">{{user.name}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let user">{{ user.name }}</td>
     </ng-container>
 
     <!-- Email -->
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let user">{{user.email}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let user">{{ user.email }}</td>
     </ng-container>
 
-     <!-- Password -->
-    <ng-container matColumnDef="password">
-      <th mat-header-cell *matHeaderCellDef> Password </th>
-      <td mat-cell *matCellDef="let user">{{user.password}}</td>
-    </ng-container>
-    
+    <!-- Password -->
+    <!-- <ng-container matColumnDef="password">
+      <th mat-header-cell *matHeaderCellDef>Password</th>
+      <td mat-cell *matCellDef="let user">{{ user.password }}</td>
+    </ng-container> -->
 
     <!-- Address -->
     <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef> Address </th>
-      <td mat-cell *matCellDef="let user">{{user.address}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+      <td mat-cell *matCellDef="let user">{{ user.address }}</td>
     </ng-container>
 
-    
-    <!-- DesignName -->
+    <!-- Designation -->
     <ng-container matColumnDef="designName">
-      <th mat-header-cell *matHeaderCellDef> DesignName </th>
-      <td mat-cell *matCellDef="let user">{{user.designName}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+      <td mat-cell *matCellDef="let user">{{ user.designName }}</td>
     </ng-container>
 
-    <!-- Contact No -->
+    <!-- Contact -->
     <ng-container matColumnDef="contactNo">
-      <th mat-header-cell *matHeaderCellDef> Contact No </th>
-      <td mat-cell *matCellDef="let user">{{user.phone}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
+      <td mat-cell *matCellDef="let user">{{ user.phone }}</td>
     </ng-container>
 
     <!-- Department -->
     <ng-container matColumnDef="department">
-      <th mat-header-cell *matHeaderCellDef> Department </th>
-      <td mat-cell *matCellDef="let user">{{user.department}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+      <td mat-cell *matCellDef="let user">{{ user.department }}</td>
     </ng-container>
 
     <!-- Status -->
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let user">{{user.status}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Status
+      </th>
+      <td mat-cell *matCellDef="let user">
+        <span [ngClass]="{
+          'status-active': user.status === 'Active',
+          'status-inactive': user.status === 'Inactive'
+        }">
+          {{ user.status }}
+        </span>
+      </td>
     </ng-container>
+
 
     <!-- Join Date -->
     <ng-container matColumnDef="joinDate">
-      <th mat-header-cell *matHeaderCellDef> Join Date </th>
-      <td mat-cell *matCellDef="let user">{{user.joiningDate}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Join Date</th>
+      <td mat-cell *matCellDef="let user">
+        {{ user.joiningDate | date }}
+      </td>
     </ng-container>
 
     <!-- Description -->
     <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let user">{{user.description}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let user">{{ user.description }}</td>
     </ng-container>
 
     <!-- Action -->
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let user">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
@@ -105,18 +116,21 @@
       </td>
     </ng-container>
 
+    <!-- Rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
+    <!-- No Data -->
     <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align:center; padding: 16px; background-color: rgb(164, 159, 159);">
-      🚫 No inactive employees found
-    </td>
-  </tr>
-
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length"
+        style="text-align:center; padding:16px; background:#9e9e9e; color:#fff;">
+        🚫 No inactive employees found
+      </td>
+    </tr>
   </table>
 
-  <!-- Pagination -->
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <!-- 📄 Pagination -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+  </mat-paginator>
 
 </div>

@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { Observable } from 'rxjs'; 
 import { environment } from 'src/environments/environment';
 import { assignEmployeeForm } from 'src/app/shared/interface/assignEmployee.interface';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AssignFormService {
 
-    baseUrl = environment.apiUrl + '/api/assignForm/'
-    constructor(private http: HttpClient) { }
+  baseUrl = environment.apiUrl + '/api/assignForm/';
 
+  constructor(private http: HttpClient) {}
 
+  addAssignFormData(body: assignEmployeeForm): Observable<any> {
+    if ((body as any)._id) delete (body as any)._id;
 
-    
-
-
-    addAssignFormData(body: assignEmployeeForm): Observable<assignEmployeeForm> {
-        debugger
-        delete body._id;
-        return this.http.post<assignEmployeeForm>(`${this.baseUrl}create`, body);
-    }
-    
+    return this.http.post<any>(`${this.baseUrl}create`, body).pipe(
+      catchError((err) => {
+        const message = err.error?.message || 'Something went wrong';
+        return throwError(() => new Error(message));
+      })
+    );
+  }
 }

@@ -7,6 +7,8 @@ import { UserFormInterface } from 'src/app/shared/interface/user.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/component/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+
 
 
 @Component({
@@ -16,12 +18,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EmployeeListActiveComponent implements OnInit {
   displayedColumns: string[] = [
-    'no', 'name', 'email','password', 'address','designName', 'contactNo', 'department',
+    'no', 'name', 'email', 'address','designName', 'contactNo', 'department',
     'status', 'joinDate', 'description', 'action'
   ];
   dataSource = new MatTableDataSource<UserFormInterface>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
 constructor(
   private routes: Router,
@@ -31,20 +35,37 @@ constructor(
 ) {}
 
   ngOnInit(): void {
-    this.getUserData();
+  this.getUserData();
 
-    this.dataSource.filterPredicate = (data: UserFormInterface, filter: string) => {
-      const searchStr = (data.name + data.email).toLowerCase();
-      return searchStr.includes(filter);
-    };
-  }
+  this.dataSource.filterPredicate = (data: UserFormInterface, filter: string) => {
+    const searchStr = (data.name + data.email).toLowerCase();
+    return searchStr.includes(filter);
+  };
+
+  this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+
+    switch (property) {
+
+      case 'contactNo':
+        return Number(item.contactNo || item.phone || 0); 
+
+
+      default:
+        return item[property];
+    }
+  };
+}
+
 
   getUserData() {
   this.userservices.getUserData().subscribe(
     (data: any) => {
       this.dataSource.data = data.filter(
-        (user: UserFormInterface) => user.status !== 'unactive'
+        (user: UserFormInterface) => user.status !== 'unActive'
       );
+      
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
       console.log('Filtered Users (excluding Unactive):', this.dataSource.data);
     },
     (error: any) => {

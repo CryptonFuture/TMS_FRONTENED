@@ -24,7 +24,7 @@ import { ConfirmDialogModule } from './shared/component/confirm-dialog/confirm-d
     FeatureLayoutModule,
     DashboardModule,
     HttpClientModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
     
 
     

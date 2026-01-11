@@ -1,22 +1,25 @@
+<!--component html goes here -->
+
 <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin-bottom: 60px;">
   <mat-card style="width: 100%; max-width: 500px; padding: 20px;">
-
+    
     <!-- Title and Button -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <mat-card-title>Employee Form</mat-card-title>
-      <button mat-raised-button color="accent" type="button" (click)="goToActiveEmployeeList()">
-        View Active Employees
+      <mat-card-title>Client Form</mat-card-title>
+      <button mat-raised-button color="accent" type="button" (click)="goToExistClientList()">
+        <mat-icon>group</mat-icon>
+        View Exist Clients
       </button>
     </div>
 
     <mat-card-content>
-      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" style="width: 100%;">
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" style="width: 100%;">
 
         <!-- Name -->
         <mat-form-field appearance="fill" style="width: 100%;">
-          <mat-label>Name</mat-label>
+          <mat-label>Client Name</mat-label>
           <input matInput formControlName="name" [disabled]="editMode">
-          <mat-error *ngIf="employeeForm.get('name')?.touched && employeeForm.get('name')?.invalid">
+          <mat-error *ngIf="clientForm.get('name')?.touched && clientForm.get('name')?.invalid">
             Name is required
           </mat-error>
         </mat-form-field>
@@ -24,28 +27,26 @@
         <!-- Email -->
         <mat-form-field appearance="fill" style="width: 100%;">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" [disabled]="editMode">
-          <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+          <input matInput type="email" formControlName="email"[disabled]="editMode">
+          <mat-error *ngIf="clientForm.get('email')?.hasError('required')">
             Email is required
           </mat-error>
 
           <mat-error
-            *ngIf="employeeForm.get('email')?.hasError('email') &&!employeeForm.get('email')?.hasError('required')">
+            *ngIf="clientForm.get('email')?.hasError('email') &&!clientForm.get('email')?.hasError('required')">
             Enter a valid email
           </mat-error>
 
-          <mat-error *ngIf="employeeForm.get('email')?.hasError('duplicate')">
+          <mat-error *ngIf="clientForm.get('email')?.hasError('duplicate')">
             Email already exists
           </mat-error>
-
-
         </mat-form-field>
 
         <!-- Password -->
         <mat-form-field *ngIf="!editMode" appearance="fill" style="width: 100%;">
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password">
-          <mat-error *ngIf="employeeForm.get('password')?.touched && employeeForm.get('password')?.invalid">
+          <mat-error *ngIf="clientForm.get('password')?.touched && clientForm.get('password')?.invalid">
             Password must be at least 6 characters
           </mat-error>
         </mat-form-field>
@@ -54,18 +55,9 @@
         <mat-form-field *ngIf="!editMode" appearance="fill" style="width: 100%;">
           <mat-label>Confirm Password</mat-label>
           <input matInput type="password" formControlName="confirmPass">
-          <mat-error *ngIf="employeeForm.get('confirmPass')?.hasError('passwordMismatch')">
+          <mat-error *ngIf="clientForm.get('confirmPass')?.hasError('passwordMismatch')">
             Password and Confirm Password do not match
           </mat-error>
-
-
-        </mat-form-field>
-
-
-        <!-- Designation -->
-        <mat-form-field appearance="fill" style="width: 100%;">
-          <mat-label>Designation</mat-label>
-          <input matInput formControlName="designName">
         </mat-form-field>
 
         <!-- Address -->
@@ -79,35 +71,33 @@
           <mat-label>Contact No</mat-label>
           <input matInput type="tel" formControlName="phone" (keyup)="onPhoneInput()" placeholder="3XXXXXXXXX">
 
-          <mat-error *ngIf="employeeForm.get('contactNo')?.touched && employeeForm.get('contactNo')?.invalid">
+          <mat-error *ngIf="clientForm.get('contactNo')?.touched && clientForm.get('contactNo')?.invalid">
             Enter a valid contact number
           </mat-error>
-        </mat-form-field>
-
-        <!-- Department -->
-        <mat-form-field appearance="fill" style="width: 100%;">
-          <mat-label>Department</mat-label>
-          <input matInput formControlName="department">
         </mat-form-field>
 
         <!-- Status -->
         <mat-form-field *ngIf="editMode" appearance="fill" style="width: 100%;">
           <mat-label>Status</mat-label>
           <mat-select formControlName="status">
-            <mat-option value="Active">Active</mat-option>
-            <mat-option value="unActive">unActive</mat-option>
-            <mat-option value="admin">Admin</mat-option>
+            <mat-option value="Exist">Exist</mat-option>
+            <mat-option value="nonExist">Non Exist</mat-option>
           </mat-select>
-          <mat-error *ngIf="employeeForm.get('status')?.touched && employeeForm.get('status')?.invalid">
+          <mat-error *ngIf="clientForm.get('status')?.touched && clientForm.get('status')?.invalid">
             Status is required
           </mat-error>
         </mat-form-field>
 
-
-        <!-- Join Date -->
+        <!-- Start Time -->
         <mat-form-field appearance="fill" style="width: 100%;">
-          <mat-label>Join Date</mat-label>
-          <input matInput type="date" formControlName="joiningDate">
+          <mat-label>Start Time</mat-label>
+          <input matInput type="time" formControlName="startTime">
+        </mat-form-field>
+
+        <!-- End Time -->
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>End Time</mat-label>
+          <input matInput type="time" formControlName="endTime">
         </mat-form-field>
 
         <!-- Description -->
@@ -119,6 +109,7 @@
         <!-- Submit Button -->
         <div style="display: flex; justify-content: center; margin-top: 16px;">
           <button mat-raised-button color="primary" type="submit">
+            <mat-icon>save</mat-icon>
             Submit
           </button>
         </div>

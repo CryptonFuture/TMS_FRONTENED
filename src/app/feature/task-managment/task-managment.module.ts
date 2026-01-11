@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TaskFormComponent } from './task/task-form/task-form.component';
 import { TaskListComponent } from './task/task-list/task-list.component';
+import { MatSortModule } from '@angular/material/sort';
 
 const routes:Routes =[
     {
@@ -74,6 +75,7 @@ const routes:Routes =[
                 MatInputModule,
                 MatSelectModule,
                 MatPaginatorModule,
+                MatSortModule,
 
     ],
     declarations: [

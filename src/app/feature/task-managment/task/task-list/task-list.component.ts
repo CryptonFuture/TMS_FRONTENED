@@ -6,7 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TaskService } from 'src/app/core/services/task.services';
 import { TaskFormInterface } from 'src/app/shared/interface/task.interface';
-import { ConfirmDialogComponent } from 'src/app/shared/component/confirm-dialog/confirm-dialog.component'; // apni path k hisaab se
+import { ConfirmDialogComponent } from 'src/app/shared/component/confirm-dialog/confirm-dialog.component';
+import { MatSort } from '@angular/material/sort';
+
 
 @Component({
   selector: 'task-list',
@@ -16,12 +18,14 @@ import { ConfirmDialogComponent } from 'src/app/shared/component/confirm-dialog/
 export class TaskListComponent implements OnInit {
 
   displayedColumns: string[] = [
-    'no', 'userEmployeeId',
+    'no', 'name',
     'status', 'description', 'action'
   ];
   dataSource = new MatTableDataSource<TaskFormInterface>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(
     private routes: Router,
@@ -40,17 +44,19 @@ export class TaskListComponent implements OnInit {
   }
 
   getTaskData() {
-    this.taskServices.getTaskData().subscribe(
-      (data: any) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        console.log('Success Data', data);
-      },
-      (error: any) => {
-        console.log('Fetching Error', error);
-      }
-    );
-  }
+  this.taskServices.getTaskData().subscribe(
+    (data: any) => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort; 
+      console.log('Success Data', data);
+    },
+    (error: any) => {
+      console.log('Fetching Error', error);
+    }
+  );
+}
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();

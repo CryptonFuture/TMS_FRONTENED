@@ -1,14 +1,20 @@
-<!--component html goes here -->
 <div style="display: flex; justify-content: center; align-items: center; min-height: 70vh; margin-bottom: 60px;">
   <mat-card style="width: 100%; max-width: 600px; padding: 20px;">
-    
-    <!-- Title and Button -->
+
+    <!-- Title -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <mat-card-title>Assign Form</mat-card-title>
-      
     </div>
 
     <mat-card-content>
+      <!-- <div *ngIf="successMessage" style="margin-bottom: 10px; color: green; font-weight: bold;">
+        {{ successMessage }}
+      </div>
+
+      <div *ngIf="errorMessage" style="margin-bottom: 10px; color: red; font-weight: bold;">
+        {{ errorMessage }}
+      </div> -->
+
       <form [formGroup]="assignForm" (ngSubmit)="onSubmit()" style="width: 100%;">
 
         <!-- Employee -->
@@ -19,25 +25,38 @@
               {{ user.name }}
             </mat-option>
           </mat-select>
-          <!-- Validation Message -->
           <mat-error *ngIf="assignForm.get('userEmployeeId')?.touched && assignForm.get('userEmployeeId')?.invalid">
             Please select an employee
           </mat-error>
+        </mat-form-field>
+
+        <!-- Client -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
+          <mat-label>Select Client</mat-label>
+          <mat-select formControlName="clientId">
+            <mat-option *ngFor="let client of clientExistList || []" [value]="client._id">
+              {{ client.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="assignForm.get('clientId')?.touched && assignForm.get('clientId')?.invalid">
+            Please select a client
+          </mat-error>
+
         </mat-form-field>
 
         <!-- Description -->
         <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
           <mat-label>Description</mat-label>
           <textarea matInput rows="3" formControlName="description"></textarea>
-          <mat-error *ngIf="assignForm.get('description')?.touched && assignForm.get('description')?.invalid">
-            Description is required
-          </mat-error>
         </mat-form-field>
 
         <!-- Submit Button -->
         <div style="display: flex; justify-content: center; margin-top: 16px;">
-          <button mat-raised-button color="primary" type="submit" [disabled]="assignForm.invalid">
-            Submit
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="assignForm.invalid || loading"
+            style="display: flex; align-items: center; gap: 5px;">
+            <mat-icon>{{ loading ? 'hourglass_top' : 'save' }}</mat-icon>
+            <span>{{ loading ? 'Assigning...' : 'Submit' }}</span>
           </button>
         </div>
 
