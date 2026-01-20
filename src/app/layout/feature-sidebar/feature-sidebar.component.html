@@ -23,6 +23,16 @@
         <mat-icon>assignment</mat-icon>
         <span *ngIf="isExpanded">Tasks</span>
       </button>
+
+
+      <!-- 🔹 Assign Allocation -->
+      <button mat-button (click)="goToPage('assign-allocation')" [class.active]="selected === 'assign-allocation'">
+        <mat-icon>link</mat-icon>
+        <span *ngIf="isExpanded">Assign Allocation</span>
+      </button>
+
+
+
     </div>
   </mat-drawer>
 

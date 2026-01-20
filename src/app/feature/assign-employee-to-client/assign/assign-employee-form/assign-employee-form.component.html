@@ -4,16 +4,16 @@
     <!-- Title -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <mat-card-title>Assign Form</mat-card-title>
+      <button mat-raised-button color="accent" type="button" (click)="goToAssignClientList()">
+        View Assign Clients List
+      </button>
+      
     </div>
 
-    <mat-card-content>
-      <!-- <div *ngIf="successMessage" style="margin-bottom: 10px; color: green; font-weight: bold;">
-        {{ successMessage }}
-      </div>
+    
 
-      <div *ngIf="errorMessage" style="margin-bottom: 10px; color: red; font-weight: bold;">
-        {{ errorMessage }}
-      </div> -->
+    <mat-card-content>
+      
 
       <form [formGroup]="assignForm" (ngSubmit)="onSubmit()" style="width: 100%;">
 
@@ -44,6 +44,21 @@
 
         </mat-form-field>
 
+        
+        <!-- Task -->
+        <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
+          <mat-label>Select Task</mat-label>
+          <mat-select formControlName="taskId">
+            <mat-option *ngFor="let task of taskActiveList || []" [value]="task._id">
+              {{ task.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="assignForm.get('taskId')?.touched && assignForm.get('taskId')?.invalid">
+            Please select a Task
+          </mat-error>
+
+        </mat-form-field>
+
         <!-- Description -->
         <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
           <mat-label>Description</mat-label>
@@ -55,8 +70,7 @@
           <button mat-raised-button color="primary" type="submit"
             [disabled]="assignForm.invalid || loading"
             style="display: flex; align-items: center; gap: 5px;">
-            <mat-icon>{{ loading ? 'hourglass_top' : 'save' }}</mat-icon>
-            <span>{{ loading ? 'Assigning...' : 'Submit' }}</span>
+            <span>{{ 'Submit' }}</span>
           </button>
         </div>
 

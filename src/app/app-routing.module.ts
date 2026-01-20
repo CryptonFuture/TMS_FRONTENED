@@ -36,7 +36,13 @@ const routes: Routes = [
         path:'clients-managment',
         canActivate:[AuthGuard],
         loadChildren:() => import('./feature/clients-managment/clients-managment.module').then(m => m.ClientsManagmentModule )
-      }
+      },
+      {
+        path:'assign-employee-to-client',
+        canActivate:[AuthGuard],
+        loadChildren:() => import('./feature/assign-employee-to-client/assign-enployee-to-client.module').then(m => m.AssignEnployeeToClientModule )
+      },
+
       
 
       

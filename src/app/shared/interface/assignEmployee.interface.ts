@@ -1,5 +1,7 @@
 export interface  assignEmployeeForm {
+    _id?:string,
     userEmployeeId:any,
-    clientId:string,
+    clientId:any,
+    taskId:any,
     description:string,
 }
