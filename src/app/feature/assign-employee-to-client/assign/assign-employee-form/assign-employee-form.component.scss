@@ -1,0 +1,20 @@
+// component css goes here
+.assign-form {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  align-items: center;
+
+  mat-form-field {
+    width: 200px;
+  }
+}
+.snackbar-success {
+  background-color: #4caf50;  
+  color: white;
+}
+
+.snackbar-error {
+  background-color: #f44336;  
+  color: white;
+}

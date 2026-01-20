@@ -1,24 +1,55 @@
 <mat-drawer-container class="main-container">
   <!-- Sidebar -->
-  <mat-drawer
-    class="sidebar"
-    mode="side"
-    [opened]="true"
-    [ngClass]="{ 'expanded': isExpanded }"
-    disableClose>
+  <mat-drawer class="sidebar" mode="side" [opened]="true" [ngClass]="{ 'expanded': isExpanded }" disableClose>
 
     <div class="icon-list">
+      <!-- Dashboard -->
       <button mat-button (click)="goToPage('app/dashboard')" [class.active]="selected === 'app/dashboard'">
         <mat-icon>dashboard</mat-icon>
         <span *ngIf="isExpanded">Dashboard</span>
       </button>
 
-      <button mat-button (click)="goToPage('app/user-managment/employee/employeeForm')" [class.active]="selected === 'app/user-managment/employee/employeeForm'">
+      <!-- Employees -->
+      <button mat-button (click)="goToPage('app/user-managment/employee/employeeListActive')"
+        [class.active]="selected === 'app/user-managment/employee/employeeListActive'">
         <mat-icon>people</mat-icon>
         <span *ngIf="isExpanded">Employees</span>
       </button>
+
+
+      <button mat-button (click)="goToPage('app/clients-managment/clients/clientsExistList')"
+        [class.active]="selected === 'app/clients-managment/clients/clientsExistList'">
+        <mat-icon>groups</mat-icon>
+        <span *ngIf="isExpanded">Clients</span>
+      </button>
+
+
+
+
+      <!-- 🔹 Tasks -->
+      <button mat-button (click)="goToPage('app/task-managment/task/taskList')"
+        [class.active]="selected === 'app/task-managment/task/taskList'">
+        <mat-icon>assignment</mat-icon>
+        <span *ngIf="isExpanded">Task Client</span>
+      </button>
+
+      <button mat-button (click)="goToPage('app/assign-employee-to-client/assign/assignAllocation')"
+        [class.active]="selected === 'app/assign-employee-to-client/assign/assignAllocation'">
+
+        <mat-icon>link</mat-icon>
+        <span *ngIf="isExpanded">Assign Allocation</span>
+
+      </button>
+
+
+
+
     </div>
+
+
   </mat-drawer>
+
+
 
   <!-- Main content -->
   <mat-drawer-content>

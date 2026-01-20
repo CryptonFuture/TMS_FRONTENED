@@ -1,0 +1,138 @@
+// component css goes here
+.client-list-container {
+  padding: 20px;
+  background: #f4f6f8;
+  padding-bottom: 10%;
+}
+
+/*  Tabs */
+mat-tab-group {
+  margin-bottom: 16px;
+}
+
+/*  Top Bar (Search + Buttons) */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 🔍 Search Field */
+.search-field {
+  width: 280px;
+}
+
+/* 📋 Table Card */
+table {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* 🧾 Header */
+th.mat-header-cell {
+  position: sticky;
+  top: 0;
+  color: #ffffff;
+  font-weight: 600;
+  z-index: 10;
+  padding: 14px;
+  background-color: #3f51b5;
+  text-align: center;
+  
+}
+
+.header-icon {
+  font-size: 18px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* 📄 Table Cells */
+td.mat-cell {
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #334155;
+}
+
+/* ✨ Row Hover */
+tr.mat-row:hover {
+  background: #f9f9f9;
+}
+
+/* 🟢 Status Badges */
+.status-Exist {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.status-nonExist {
+  background: #fdecea;
+  color: #c62828;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ⚙ Action Menu Button */
+.mat-icon-button {
+  background: #f5f5f5;
+  border-radius: 50%;
+}
+
+.mat-icon-button:hover {
+  background: #e0e0e0;
+}
+
+/* 🚫 No Data Row */
+tr.mat-row .mat-cell {
+  text-align: center;
+  font-weight: 500;
+  color: #777;
+  padding: 16px;
+}
+
+/* 📄 Pagination */
+mat-paginator {
+  margin-top: 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .search-field {
+    width: 100%;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+::ng-deep .mat-sort-header-arrow {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-sort-header:not(.mat-sort-header-sorted)
+.mat-sort-header-arrow {
+  opacity: 1 !important;
+}

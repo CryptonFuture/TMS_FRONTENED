@@ -8,7 +8,7 @@ import { UserFormInterface } from 'src/app/shared/interface/user.interface';
   selector: 'app-employee-form',
   templateUrl: './employee-form.component.html'
 })
-export class EmployeeFormComponent implements OnInit{
+export class EmployeeFormComponent implements OnInit {
 
   employeeForm!: FormGroup;
   editMode = false;
@@ -19,7 +19,7 @@ export class EmployeeFormComponent implements OnInit{
     private userServices: UserService,
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -31,6 +31,7 @@ export class EmployeeFormComponent implements OnInit{
         this.loadUserForEdit(this.editUserId);
       }
     });
+
   }
 
   initialize(): void {
@@ -40,7 +41,7 @@ export class EmployeeFormComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPass: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      phone: ['', [Validators.required,Validators.pattern(/^92[0-9]{10}$/)]],
       address: ['', Validators.required],
       designName: ['', Validators.required],
       department: ['', Validators.required],
@@ -48,110 +49,150 @@ export class EmployeeFormComponent implements OnInit{
       description: [''],
       accsessToken: [''],
       refreshToken: [''],
-      status: ['Active'],
-    //   is_admin: [false],
+      status: ['unActive'],
+      //   is_admin: [false],
       is_deleted: [false],
       createdAt: [''],
       updatedAt: ['']
     }, { validators: this.passwordMatchValidator });
   }
 
-  passwordMatchValidator(group: FormGroup) {
-    const pass = group.get('password')?.value;
-    const confirmPass = group.get('confirmPass')?.value;
-    return pass === confirmPass ? null : { passwordMismatch: true };
+ onPhoneInput(): void {
+  const ctrl = this.employeeForm.get('phone');
+  if (!ctrl) return;
+
+  let value = ctrl.value || '';
+
+  // sirf digits
+  value = value.replace(/\D/g, '');
+
+  if (value.startsWith('03')) {
+    value = value.substring(1);
   }
 
+  if (value.startsWith('3')) {
+    value = '92' + value;
+  }
+
+  value = value.substring(0, 12);
+
+  ctrl.setValue(value, { emitEvent: false });
+}
+
+
+  
+
+
+  passwordMatchValidator(group: FormGroup) {
+    const passCtrl = group.get('password');
+    const confirmCtrl = group.get('confirmPass');
+
+    if (!passCtrl || !confirmCtrl) return null;
+
+    if (!passCtrl.value || !confirmCtrl.value) return null;
+
+    if (passCtrl.value !== confirmCtrl.value) {
+      confirmCtrl.setErrors({ passwordMismatch: true });
+      return null;
+    }
+
+    // clear error if match
+    if (confirmCtrl.hasError('passwordMismatch')) {
+      confirmCtrl.setErrors(null);
+    }
+
+    return null;
+  }
+
+
   onSubmit(): void {
-    debugger
     if (this.employeeForm.invalid) {
-      console.log('Form is invalid');
       this.employeeForm.markAllAsTouched();
       return;
     }
 
-    const formData = this.employeeForm.value
+    const formData = this.employeeForm.getRawValue();
 
+    const payload: any = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      designName: formData.designName,
+      department: formData.department,
+      joiningDate: formData.joiningDate,
+      description: formData.description,
+      status: formData.status,
+      is_deleted: formData.is_deleted
+    };
 
-    const payload: UserFormInterface = {
-  _id: formData._id,
-  name: formData.name,
-  email: formData.email,
-  password: formData.password,
-  confirmPass: formData.confirmPass,
-  phone: formData.phone,
-  address: formData.address,
-  designName: formData.designName,
-  department: formData.department,
-  joiningDate: formData.joiningDate,
-  description: formData.description,
-  accsessToken: formData.accsessToken,
-  refreshToken: formData.refreshToken,
-  status: formData.status,
-//   is_admin: formData.is_admin,
-  is_deleted: formData.is_deleted,
-  createdAt: formData.createdAt,
-  updatedAt: formData.updatedAt
-};
-
+    if (!this.editMode) {
+      payload.password = formData.password;
+      payload.confirmPass = formData.confirmPass;
+    }
 
     if (this.editMode) {
-    const UserId = String (this.editUserId);
-
-      this.userServices.editUserData(UserId, payload).subscribe({
-        next: (response: any) => {
-          console.log('User updated Successfully', response);
-
-          this.employeeForm.reset();
-          this.routes.navigateByUrl('app/user-managment/employee/employeeListActive');
-        },
-        error: (error: any) => {
-          console.log('Error updating User:', error);
-        }
+      this.userServices.editUserData(this.editUserId!, payload).subscribe(() => {
+        this.routes.navigateByUrl('app/user-managment/employee/employeeListActive');
       });
     } else {
-      this.userServices.addUserData(payload).subscribe(
-        (response: any) => {
-          console.log('User added successfully', response);
-          this.employeeForm.reset();
-              this.routes.navigateByUrl('app/user-managment/employee/employeeListActive');
-
+      this.userServices.addUserData(payload).subscribe({
+        next: () => {
+          this.routes.navigateByUrl('app/user-managment/employee/employeeListActive');
         },
-         (error: any) => {
-          console.log('Error adding User:', error);
-        
+        error: (err) => {
+
+          if (err.error?.field === 'password') {
+            this.employeeForm.setErrors({ passwordMismatch: true });
+            this.employeeForm.get('confirmPass')?.markAsTouched();
+          }
+
+          if (err.error?.field === 'email') {
+            this.employeeForm.get('email')?.setErrors({ duplicate: true });
+          }
+        }
       });
+
     }
   }
 
+
   loadUserForEdit(userId: string): void {
-  this.userServices.getUserById(userId).subscribe(
-    (user   ) => {
+    this.userServices.getUserById(userId).subscribe(user => {
 
       this.employeeForm.patchValue({
         _id: user._id,
         name: user.name,
         email: user.email,
-        password: user.password,
-        confirmPass: user.confirmPass,
         phone: user.phone,
         address: user.address,
         designName: user.designName,
         department: user.department,
         joiningDate: user.joiningDate,
         description: user.description,
-        status:user.status,
+        status: user.status
       });
-    }
-  );
-}
+
+      // Disable name & email
+      this.employeeForm.get('name')?.disable();
+      this.employeeForm.get('email')?.disable();
+
+      // Remove password validators
+      this.employeeForm.get('password')?.clearValidators();
+      this.employeeForm.get('confirmPass')?.clearValidators();
+
+      this.employeeForm.get('password')?.updateValueAndValidity();
+      this.employeeForm.get('confirmPass')?.updateValueAndValidity();
+    });
+  }
 
 
-  
+
+
 
   goToActiveEmployeeList(): void {
     this.routes.navigateByUrl('app/user-managment/employee/employeeListActive');
   }
 
-  
+
 }

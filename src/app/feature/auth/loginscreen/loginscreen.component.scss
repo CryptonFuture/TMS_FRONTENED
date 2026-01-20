@@ -40,3 +40,19 @@ mat-card {
   text-decoration: none;
   color: #3f51b5;
 }
+
+.success-snackbar {
+  background: #4caf50; /* Green */
+  color: white;
+}
+
+.error-snackbar {
+  background: #f44336; /* Red */
+  color: white;
+}
+
+.warn-snackbar {
+  background: #ff9800; /* Orange */
+  color: white;
+}
+

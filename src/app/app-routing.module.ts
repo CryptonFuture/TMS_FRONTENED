@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginscreenComponent } from './feature/auth/loginscreen/loginscreen.component';
 import { FeatureLayoutComponent } from './layout/feature-layout/feature-layout.component';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
+import { AuthGuard } from './core/guard/auth-guard';
 
 const routes: Routes = [
 
@@ -12,13 +13,37 @@ const routes: Routes = [
     children:[
       {
         path:'dashboard',
+        canActivate: [AuthGuard],
         component:DashboardComponent
       },
       {
         path:'user-managment',
+        canActivate: [AuthGuard],
         loadChildren:()=> import('./feature/user-managment/user-managment.module').then(m => m.UserManagmentModule)
 
       },
+      {
+        path:'assign-employee-to-client',
+        canActivate: [AuthGuard],
+        loadChildren:()=> import('./feature/assign-employee-to-client/assign-enployee-to-client.module').then(m => m.AssignEnployeeToClientModule)
+      },
+      {
+        path:'task-managment',
+        canActivate: [AuthGuard],
+        loadChildren:()=> import('./feature/task-managment/task-managment.module').then(m => m.TaskManagmentModule)
+      },
+      {
+        path:'clients-managment',
+        canActivate:[AuthGuard],
+        loadChildren:() => import('./feature/clients-managment/clients-managment.module').then(m => m.ClientsManagmentModule )
+      },
+      {
+        path:'assign-employee-to-client',
+        canActivate:[AuthGuard],
+        loadChildren:() => import('./feature/assign-employee-to-client/assign-enployee-to-client.module').then(m => m.AssignEnployeeToClientModule )
+      },
+
+      
 
       
 
@@ -40,7 +65,7 @@ const routes: Routes = [
          },
          {
           path: '**',
-          component: FeatureLayoutComponent
+          component: LoginscreenComponent
          },
 
 

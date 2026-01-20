@@ -12,6 +12,14 @@
 .sidebar.expanded {
   width: 200px;
 }
+.icon-list {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  
+
+  
+}
 
 .icon-list button {
   width: 100%;
@@ -53,4 +61,3 @@ button.active {
 button.active mat-icon {
   color: white;
 }
-

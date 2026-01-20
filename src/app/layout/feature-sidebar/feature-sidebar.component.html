@@ -6,10 +6,33 @@
         <mat-icon>dashboard</mat-icon>
         <span *ngIf="isExpanded">Dashboard</span>
       </button>
+
       <button mat-button (click)="goToPage('employees')" [class.active]="selected === 'employees'">
         <mat-icon>people</mat-icon>
         <span *ngIf="isExpanded">Employees</span>
       </button>
+
+      <button mat-button (click)="goToPage('clients')" [class.active]="selected === 'clients'">
+        <mat-icon>groups</mat-icon>
+        <span *ngIf="isExpanded">Clients</span>
+      </button>
+
+
+      <!-- 🔹 New Tasks Button -->
+      <button mat-button (click)="goToPage('task')" [class.active]="selected === 'task'">
+        <mat-icon>assignment</mat-icon>
+        <span *ngIf="isExpanded">Tasks</span>
+      </button>
+
+
+      <!-- 🔹 Assign Allocation -->
+      <button mat-button (click)="goToPage('assign-allocation')" [class.active]="selected === 'assign-allocation'">
+        <mat-icon>link</mat-icon>
+        <span *ngIf="isExpanded">Assign Allocation</span>
+      </button>
+
+
+
     </div>
   </mat-drawer>
 

@@ -1,6 +1,6 @@
 <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin-bottom: 60px;">
   <mat-card style="width: 100%; max-width: 500px; padding: 20px;">
-    
+
     <!-- Title and Button -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <mat-card-title>Employee Form</mat-card-title>
@@ -15,7 +15,7 @@
         <!-- Name -->
         <mat-form-field appearance="fill" style="width: 100%;">
           <mat-label>Name</mat-label>
-          <input matInput formControlName="name">
+          <input matInput formControlName="name" [disabled]="editMode">
           <mat-error *ngIf="employeeForm.get('name')?.touched && employeeForm.get('name')?.invalid">
             Name is required
           </mat-error>
@@ -24,14 +24,25 @@
         <!-- Email -->
         <mat-form-field appearance="fill" style="width: 100%;">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email">
-          <mat-error *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid">
-            Please enter a valid email
+          <input matInput type="email" formControlName="email" [disabled]="editMode">
+          <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+            Email is required
           </mat-error>
+
+          <mat-error
+            *ngIf="employeeForm.get('email')?.hasError('email') &&!employeeForm.get('email')?.hasError('required')">
+            Enter a valid email
+          </mat-error>
+
+          <mat-error *ngIf="employeeForm.get('email')?.hasError('duplicate')">
+            Email already exists
+          </mat-error>
+
+
         </mat-form-field>
 
         <!-- Password -->
-        <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-form-field *ngIf="!editMode" appearance="fill" style="width: 100%;">
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password">
           <mat-error *ngIf="employeeForm.get('password')?.touched && employeeForm.get('password')?.invalid">
@@ -40,13 +51,16 @@
         </mat-form-field>
 
         <!-- Confirm Password -->
-        <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-form-field *ngIf="!editMode" appearance="fill" style="width: 100%;">
           <mat-label>Confirm Password</mat-label>
           <input matInput type="password" formControlName="confirmPass">
-          <mat-error *ngIf="employeeForm.errors?.['passwordMismatch']">
-            Passwords do not match
+          <mat-error *ngIf="employeeForm.get('confirmPass')?.hasError('passwordMismatch')">
+            Password and Confirm Password do not match
           </mat-error>
+
+
         </mat-form-field>
+
 
         <!-- Designation -->
         <mat-form-field appearance="fill" style="width: 100%;">
@@ -63,7 +77,8 @@
         <!-- Contact No -->
         <mat-form-field appearance="fill" style="width: 100%;">
           <mat-label>Contact No</mat-label>
-          <input matInput formControlName="phone" type="tel">
+          <input matInput type="tel" formControlName="phone" (keyup)="onPhoneInput()" placeholder="3XXXXXXXXX">
+
           <mat-error *ngIf="employeeForm.get('contactNo')?.touched && employeeForm.get('contactNo')?.invalid">
             Enter a valid contact number
           </mat-error>
@@ -76,17 +91,17 @@
         </mat-form-field>
 
         <!-- Status -->
-         <mat-form-field *ngIf="editMode" appearance="fill" style="width: 100%;">
-           <mat-label>Status</mat-label>
-           <mat-select formControlName="status">
-           <mat-option value="active">Active</mat-option>
-           <mat-option value="unactive">Unactive</mat-option>
-           <mat-option value="admin">Admin</mat-option>
-           </mat-select>
-           <mat-error *ngIf="employeeForm.get('status')?.touched && employeeForm.get('status')?.invalid">
-             Status is required
-           </mat-error>
-         </mat-form-field>
+        <mat-form-field *ngIf="editMode" appearance="fill" style="width: 100%;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Active">Active</mat-option>
+            <mat-option value="unActive">unActive</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+          <mat-error *ngIf="employeeForm.get('status')?.touched && employeeForm.get('status')?.invalid">
+            Status is required
+          </mat-error>
+        </mat-form-field>
 
 
         <!-- Join Date -->
@@ -103,7 +118,7 @@
 
         <!-- Submit Button -->
         <div style="display: flex; justify-content: center; margin-top: 16px;">
-          <button mat-raised-button color="primary" type="submit" [disabled]="employeeForm.invalid">
+          <button mat-raised-button color="primary" type="submit">
             Submit
           </button>
         </div>

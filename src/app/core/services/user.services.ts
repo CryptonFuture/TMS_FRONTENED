@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs'; 
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserFormInterface } from 'src/app/shared/interface/user.interface';
 @Injectable({
@@ -17,8 +17,8 @@ export class UserService {
 
 
 
-    getUserData(): Observable<UserFormInterface> {
-        return this.http.get<UserFormInterface>(`${this.baseUrl}getall`);
+    getUserData(): Observable<UserFormInterface[]> {
+        return this.http.get<UserFormInterface[]>(`${this.baseUrl}getall`);
     }
 
     getUserById(id: string): Observable<UserFormInterface> {
@@ -38,4 +38,10 @@ export class UserService {
     deleteUserById(id: string): Observable<UserFormInterface> {
         return this.http.delete<UserFormInterface>(`${this.baseUrl}delete/` + id);
     }
+
+    // user.services.ts
+    getAvailableEmployees(): Observable<UserFormInterface[]> {
+    return this.http.get<UserFormInterface[]>(`${this.baseUrl}available`);
+  }
+
 }
