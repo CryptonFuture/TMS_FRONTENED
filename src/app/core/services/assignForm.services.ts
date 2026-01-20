@@ -13,7 +13,7 @@ export class AssignFormService {
 
   baseUrl = environment.apiUrl + '/api/assignForm/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addAssignFormData(body: assignEmployeeForm): Observable<any> {
     if ((body as any)._id) delete (body as any)._id;
@@ -25,4 +25,25 @@ export class AssignFormService {
       })
     );
   }
+
+
+  getAssignData(): Observable<assignEmployeeForm[]> {
+    return this.http.get<assignEmployeeForm[]>(`${this.baseUrl}getall`);
+  }
+
+  getAssignById(id: string): Observable<assignEmployeeForm> {
+    return this.http.get<assignEmployeeForm>(`${this.baseUrl}getbyid/` + id);
+  }
+
+
+
+  editAssignData(id: string, body: assignEmployeeForm): Observable<assignEmployeeForm> {
+    delete body._id;
+    return this.http.put<assignEmployeeForm>(`${this.baseUrl}update/` + id, body);
+  }
+
+  deleteAssignById(id: string): Observable<assignEmployeeForm> {
+    return this.http.delete<assignEmployeeForm>(`${this.baseUrl}delete/` + id);
+  }
+
 }

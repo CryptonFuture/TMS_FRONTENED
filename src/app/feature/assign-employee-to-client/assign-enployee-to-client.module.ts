@@ -15,36 +15,49 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { AssignAllocationComponent } from './assign/assign-allocation/assign-allocation.component';
+import { AssignNonAllocationComponent } from './assign/assign-non-allocation/assign-non-allocation.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSortModule } from '@angular/material/sort';
 
-const routes:Routes=[
+const routes: Routes = [
     {
-        path:'',
-        component:AssignEnployeeToClientComponent,
-        children:[
+        path: '',
+        component: AssignEnployeeToClientComponent,
+        children: [
             {
-                path:'assign',
-                children:[
+                path: 'assign',
+                children: [
                     {
-                        path:'assignEmployeeForm',
-                        component:AssignEmployeeFormComponent
+                        path: 'assignEmployeeForm',
+                        component: AssignEmployeeFormComponent
                     },
-                    
+                    {
+                        path: 'assignAllocation',
+                        component: AssignAllocationComponent
+                    },
+                    {
+                        path: 'assignNonAllocation',
+                        component: AssignNonAllocationComponent
+                    }
+
                 ],
-                
+
             },
 
 
         ]
-        
+
 
 
 
     },
     {
-    path:'',
-    redirectTo:'app/dashboard',
-    pathMatch:'full',
-   }
+        path: '',
+        redirectTo: 'app/dashboard',
+        pathMatch: 'full',
+    }
 
 
 ]
@@ -54,24 +67,29 @@ const routes:Routes=[
 
 @NgModule({
     imports: [
-                RouterModule.forChild(routes),
-                FormsModule,
-                CommonModule,
-                ReactiveFormsModule,
-                MatTableModule,
-                MatMenuModule,
-                MatButtonModule,
-                MatIconModule,
-                MatCardModule,
-                MatFormFieldModule,
-                MatInputModule,
-                MatSelectModule,
+        RouterModule.forChild(routes),
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        MatTableModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatPaginatorModule,
+        MatTabsModule,
+        MatSortModule,
 
     ],
     declarations: [
         AssignEnployeeToClientComponent,
 
-        AssignEmployeeFormComponent
+        AssignEmployeeFormComponent,
+        AssignAllocationComponent,
+        AssignNonAllocationComponent
     ],
     exports: [
         AssignEnployeeToClientComponent,

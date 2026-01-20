@@ -17,8 +17,8 @@ export class TaskService {
 
 
 
-    getTaskData(): Observable<TaskFormInterface> {
-        return this.http.get<TaskFormInterface>(`${this.baseUrl}getall`);
+    getTaskData(): Observable<TaskFormInterface[]> {
+        return this.http.get<TaskFormInterface[]>(`${this.baseUrl}getall`);
     }
 
     getTaskById(id: string): Observable<TaskFormInterface> {
